@@ -1,0 +1,26 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+.wrapper{
+    background: rgb(148, 247, 161);
+    padding: 20px;
+}
+
+.wrapper h1{
+    margin-bottom: 10px;
+}
+
+.wrapper .show-area{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
