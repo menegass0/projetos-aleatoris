@@ -41,6 +41,7 @@ function verificarDadosExistentes() {
         console.log('funçao verificar dados existentes');
         buscarEmojis();
     }
+    teste();
 }
 
 function removerItems() {
