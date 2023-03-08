@@ -12,6 +12,9 @@ body{
       flex-wrap: wrap;
 }
 
+body::-webkit-scrollbar{
+    width: 0;
+}
 
 .teste{
     display: flex;
@@ -24,7 +27,7 @@ body{
     z-index: 1;
     color: #fff;
     text-align: center;
-    transition: all  ease;
+    transition: opacity 2s ease;
 }
 
 .teste .bloco:nth-of-type(odd){
