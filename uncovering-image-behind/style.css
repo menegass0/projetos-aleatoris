@@ -1,0 +1,32 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+
+body{
+    width: 100%;
+      min-height: 100vh;   
+      background-size: cover;  
+      background-image: url(elefante-africano-235722367.jpg);
+      display: flex;
+      flex-wrap: wrap;
+}
+
+
+.teste{
+    display: flex;
+    flex-wrap: wrap;
+}
+.teste .bloco{
+    width: 20vw;
+    height: 20vh;
+    background: black;
+    z-index: 1;
+    color: #fff;
+    text-align: center;
+    transition: all  ease;
+}
+
+.teste .bloco:nth-of-type(odd){
+    background: rgb(94, 94, 94);
+}
