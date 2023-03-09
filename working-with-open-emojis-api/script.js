@@ -2,10 +2,18 @@ let showArea = document.querySelector('.show-area');
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
+let searchId = null;
 
 // removerItems();
 verificarDadosExistentes();
 teste();
+
+// searchId = 0;
+// do{
+//     setTimeout(pesquisaTodos(searchId), 5000);
+//     searchId +=500;
+// }while((searchId+500)<arrEmoji.length)
+
 
 function montarArray(item, indice) {
         arrEmojiTemp[indice] = item;
@@ -50,11 +58,36 @@ function removerItems() {
 
 
 
+// function pesquisaTodos(){
+//     showArea.innerHTML = '';
+//     arrEmoji.forEach(element => {
+//         let splitAr = element.codePoint.split(' ');
+//         showArea.innerHTML += `<div class='small-emoji'> `
+//         splitAr.forEach(code =>{
+//             showArea.innerHTML += `
+//                 &#x${code};
+//             `
+//         });
+//         showArea.innerHTML += `</div>`
+//     });
+// }
 
-function pesquisaTodos(){
-    showArea.innerHTML = '';
-    arrEmoji.forEach(element => {
-        let splitAr = element.codePoint.split(' ');
+function pesquisaTodos(startingInd){
+    if((startingInd + 501) > arrEmoji.length){
+        for (let index = startingInd; index < arrEmoji.length; index++) {
+            let splitAr = arrEmoji[inde].codePoint.split(' ');
+            showArea.innerHTML += `<div class='small-emoji'> `
+            splitAr.forEach(code =>{
+                showArea.innerHTML += `
+                    &#x${code};
+                `
+            });
+            showArea.innerHTML += `</div>`
+        }
+        return false;
+    }
+    for (let index = startingInd; index < startingInd+500; index++) {
+        let splitAr = arrEmoji[index].codePoint.split(' ');
         showArea.innerHTML += `<div class='small-emoji'> `
         splitAr.forEach(code =>{
             showArea.innerHTML += `
@@ -62,8 +95,11 @@ function pesquisaTodos(){
             `
         });
         showArea.innerHTML += `</div>`
-    });
+    }
 }
+
+
+
 
 // function gerarViewEmoji(indice){
 //     let contador = 0;
