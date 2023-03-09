@@ -3,14 +3,12 @@ let showArea = document.querySelector('.show-area');
 let arrEmoji = [];
 let arrEmojiTemp = [];
 
-//removerItems();
+// removerItems();
 verificarDadosExistentes();
 teste();
 
 function montarArray(item, indice) {
-    if(indice < 30){
         arrEmojiTemp[indice] = item;
-    }
 }
 
 function armazenarDados(data) {
@@ -18,30 +16,31 @@ function armazenarDados(data) {
 }
 
 function buscarEmojis() {
-    fetch('https://emoji-api.com/emojis?access_key=15c4485b1dc1618bff37567d3bf8e3175d6e4402')
+    fetch('https://emoji-api.com/emojis?access_key=86c4d9029d3a3d371e868b7f28bbe0bac0335f6c')
     .then(res => res.json())
     .then(data => {
         data.forEach(
             montarArray
         );
-
         armazenarDados(arrEmojiTemp);
-        
+        verificarDadosExistentes();
+        teste();
     });
 }
 
 function verificarDadosExistentes() {
-    console.log(localStorage);
+    console.log(localStorage.getItem('arrEmoji') ? true : false);
     
+
     if(localStorage.getItem('arrEmoji')){
         arrEmoji = JSON.parse(localStorage.getItem('arrEmoji'));
+        console.log('nao era pra entra aqui');
     }
     
     if(arrEmoji.length == 0){
         console.log('funçao verificar dados existentes');
         buscarEmojis();
     }
-    teste();
 }
 
 function removerItems() {
@@ -103,10 +102,13 @@ function pesquisaTodos(){
 
 function teste(){
     for (let index = 0; index < 500; index++) {
-        showArea.innerHTML += `
-            <div class='emoji-test'>
-                &#x${arrEmoji[index].codePoint}
-            </div>
-        `        
+        let splitAr = arrEmoji[index].codePoint.split(' ');
+        showArea.innerHTML += `<div class='small-emoji'> `
+        splitAr.forEach(code =>{
+            showArea.innerHTML += `
+                &#x${code};
+            `
+        });
+        showArea.innerHTML += `</div>`      
     }
 }
