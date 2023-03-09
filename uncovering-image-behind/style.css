@@ -24,7 +24,6 @@ body::-webkit-scrollbar{
     width: 20vw;
     height: 20vh;
     background: black;
-    z-index: 1;
     color: #fff;
     text-align: center;
     transition: opacity 2s ease;
@@ -32,4 +31,13 @@ body::-webkit-scrollbar{
 
 .teste .bloco:nth-of-type(odd){
     background: rgb(94, 94, 94);
+}
+
+@keyframes anim{
+	0%{
+		transform: translateZ(30px);
+	}
+	100%{
+		transform: translateY(120vh);
+	}
 }

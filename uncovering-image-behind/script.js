@@ -9,12 +9,12 @@ setInterval(() => {
         random = Math.floor(Math.random() * (numbersArray.length - 1))
         randomInd = numbersArray[random];
         let block = document.querySelector('#b'+randomInd);
-        block.style.opacity = 0;
+        block.style.animation = 'anim 2s 2s forwards';
         numbersArray.splice(random, 1);
     }
     else{
         return ;
     }
 }, 500);
-dasdasd
+
 
