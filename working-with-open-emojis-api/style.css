@@ -3,24 +3,36 @@
     padding: 0;
 }
 body{
+    background: rgb(177, 248, 186);
     display: flex;
     align-items: center;
     justify-content: center;
     min-height: 100vh;
+    padding: 100px 0 100px 0;
 }
-.wrapper{
-    background: rgb(148, 247, 161);
-    padding: 20px;
-}
-
-.wrapper h1{
-    margin-bottom: 10px;
-}
-
-.wrapper .show-area{
+.wrapper {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
+    background: #fff;
+    padding: 20px;
+    border-radius: 5px;
 }
+
+.wrapper h1{
+    margin-bottom: 30px;
+}
+
+
+li{
+    list-style:none;
+    display: flex;
+    justify-content: center;
+}
+
+ul li .small-emoji{
+    font-size: 60px;
+}
+
 

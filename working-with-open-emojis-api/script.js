@@ -1,4 +1,5 @@
 let showArea = document.querySelector('.show-area');
+let listArr = document.querySelector('.list');
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
@@ -6,35 +7,30 @@ let searchId = null;
 
 // removerItems();
 verificarDadosExistentes();
-loopTeste();
 
 searchId = 0;
+loopTeste();
 
-showArea.innerHTML = '';
-
+console.log('foi1');
+pesquisaTodos(searchId, 20);
+searchId += 20;
 async function loopTeste(){
-    
-    console.log('foi1');
-    pesquisaTodos(searchId);
-    searchId += 100;
 
     setTimeout(() => {
-        pesquisaTodos(searchId);
-        searchId += 100;
-        console.log("Delayed for 5 second.");
+        pesquisaTodos(searchId, 20);
+        console.log(searchId);
+        searchId += 20;
 
         if(searchId < arrEmoji.length){
             loopTeste();
         }
         
-      }, 5000);
-    
-    searchId = 0;
+    }, 1000);
 }
 
 
 function montarArray(item, indice) {
-        arrEmojiTemp[indice] = item;
+    arrEmojiTemp[indice] = item;
 }
 
 function armazenarDados(data) {
@@ -72,42 +68,24 @@ function removerItems() {
     localStorage.removeItem('arrEmoji');
 }
 
-
-
-
-// function pesquisaTodos(){
-//     showArea.innerHTML = '';
-//     arrEmoji.forEach(element => {
-//         let splitAr = element.codePoint.split(' ');
-//         showArea.innerHTML += `<div class='small-emoji'> `
-//         splitAr.forEach(code =>{
-//             showArea.innerHTML += `
-//                 &#x${code};
-//             `
-//         });
-//         showArea.innerHTML += `</div>`
-//     });
-// }
-
-function pesquisaTodos(startingInd){
-    console.log('entrou aqui');
-    for (let index = startingInd; index < startingInd+100; index++) {
+function pesquisaTodos(startingInd, tamLinha){
+    console.log(startingInd);
+    listArr.innerHTML += `<li class='line' id='${startingInd}'></li><br>`;
+    let line = document.getElementById(startingInd);
+    for (let index = startingInd; index < (startingInd+tamLinha); index++) {
         if(arrEmoji[index]){
             let splitAr = arrEmoji[index].codePoint.split(' ');
-            showArea.innerHTML += `<div class='small-emoji'> `
+            line.innerHTML += `<div class='small-emoji' id='${index}'> `;
             splitAr.forEach(code =>{
-                showArea.innerHTML += `
+                line.innerHTML += `
                     &#x${code};
                 `
             });
-            showArea.innerHTML += `</div>`;
-        }
-        
+            line.innerHTML += `</div>`
+        }    
     }
     return false;
 }
-
-
 
 
 // function gerarViewEmoji(indice){
@@ -145,15 +123,3 @@ function pesquisaTodos(startingInd){
 //     return '<td>'+data+'</td>';
 // }
 
-function teste(){
-    for (let index = 0; index < 500; index++) {
-        let splitAr = arrEmoji[index].codePoint.split(' ');
-        showArea.innerHTML += `<div class='small-emoji'> `
-        splitAr.forEach(code =>{
-            showArea.innerHTML += `
-                &#x${code};
-            `
-        });
-        showArea.innerHTML += `</div>`      
-    }
-}
