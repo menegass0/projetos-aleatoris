@@ -6,13 +6,31 @@ let searchId = null;
 
 // removerItems();
 verificarDadosExistentes();
-teste();
+loopTeste();
 
-// searchId = 0;
-// do{
-//     setTimeout(pesquisaTodos(searchId), 5000);
-//     searchId +=500;
-// }while((searchId+500)<arrEmoji.length)
+searchId = 0;
+
+showArea.innerHTML = '';
+
+async function loopTeste(){
+    
+    console.log('foi1');
+    pesquisaTodos(searchId);
+    searchId += 100;
+
+    setTimeout(() => {
+        pesquisaTodos(searchId);
+        searchId += 100;
+        console.log("Delayed for 5 second.");
+
+        if(searchId < arrEmoji.length){
+            loopTeste();
+        }
+        
+      }, 5000);
+    
+    searchId = 0;
+}
 
 
 function montarArray(item, indice) {
@@ -32,7 +50,6 @@ function buscarEmojis() {
         );
         armazenarDados(arrEmojiTemp);
         verificarDadosExistentes();
-        teste();
     });
 }
 
@@ -73,29 +90,21 @@ function removerItems() {
 // }
 
 function pesquisaTodos(startingInd){
-    if((startingInd + 501) > arrEmoji.length){
-        for (let index = startingInd; index < arrEmoji.length; index++) {
-            let splitAr = arrEmoji[inde].codePoint.split(' ');
+    console.log('entrou aqui');
+    for (let index = startingInd; index < startingInd+100; index++) {
+        if(arrEmoji[index]){
+            let splitAr = arrEmoji[index].codePoint.split(' ');
             showArea.innerHTML += `<div class='small-emoji'> `
             splitAr.forEach(code =>{
                 showArea.innerHTML += `
                     &#x${code};
                 `
             });
-            showArea.innerHTML += `</div>`
+            showArea.innerHTML += `</div>`;
         }
-        return false;
+        
     }
-    for (let index = startingInd; index < startingInd+500; index++) {
-        let splitAr = arrEmoji[index].codePoint.split(' ');
-        showArea.innerHTML += `<div class='small-emoji'> `
-        splitAr.forEach(code =>{
-            showArea.innerHTML += `
-                &#x${code};
-            `
-        });
-        showArea.innerHTML += `</div>`
-    }
+    return false;
 }
 
 
