@@ -1,7 +1,7 @@
 let body = document.getElementById('body');
 let showArea = document.querySelector('.show-area');
 let listArr = document.querySelector('.list');
-
+let loadingGif = document.getElementById('loading');
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
@@ -26,13 +26,14 @@ function carregarDados() {
     
     if((totalScroll+barra) == total){
         if(searchId < arrEmoji.length){
-            pesquisaTodos(searchId, 20, 500);
-            searchId += 500;
+            loadingGif.style.display = 'block';
+            setTimeout(()=>{
+                pesquisaTodos(searchId, 20, 500);
+                searchId += 500;
+                loadingGif.style.display = 'none';
+            }, 1000)
         }
     }
-
-    console.log("total "+total+" totalScroll "+totalScroll+' buttons '+window.innerHeight);
-    console.log((totalScroll * 100)/total);
 }; 
 window.addEventListener("scroll", carregarDados);
 
@@ -107,6 +108,7 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
             }    
         }
     }
+
     return false;
 }
 
