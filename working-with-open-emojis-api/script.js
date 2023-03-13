@@ -1,5 +1,7 @@
+let body = document.getElementById('body');
 let showArea = document.querySelector('.show-area');
 let listArr = document.querySelector('.list');
+
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
@@ -7,26 +9,45 @@ let searchId = null;
 
 // removerItems();
 verificarDadosExistentes();
+// loopTeste();
 
 searchId = 0;
-loopTeste();
-
 console.log('foi1');
 pesquisaTodos(searchId, 20, 500);
 searchId += 500;
-async function loopTeste(){
 
-    setTimeout(() => {
-        pesquisaTodos(searchId, 20, 500);
-        console.log(searchId);
-        searchId += 500;
 
+function carregarDados() {
+    let body = document.getElementById('body');
+    let barra = window.innerHeight;
+    let total = body.offsetHeight;
+    let totalScroll = window.scrollY;
+
+    
+    if((totalScroll+barra) == total){
         if(searchId < arrEmoji.length){
-            loopTeste();
+            pesquisaTodos(searchId, 20, 500);
+            searchId += 500;
         }
+    }
+
+    console.log("total "+total+" totalScroll "+totalScroll+' buttons '+window.innerHeight);
+    console.log((totalScroll * 100)/total);
+}; 
+window.addEventListener("scroll", carregarDados);
+
+// async function loopTeste(){
+    
+//     setTimeout(() => {
+//         pesquisaTodos(searchId, 20, 500);
+//         searchId += 500;
         
-    }, 1000);
-}
+//         if(searchId < arrEmoji.length){
+//             loopTeste();
+//         }
+        
+//     }, 1000);
+// }
 
 
 function montarArray(item, indice) {
@@ -69,7 +90,6 @@ function removerItems() {
 }
 
 function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
-    console.log(startingInd);
     qtdLinha = tamPesquisa / 20;
     for(let i = 0; i < qtdLinha; i++){
         listArr.innerHTML += `<li class='line' id='${(startingInd)+(i*tamLinha)}'></li><br>`;
@@ -90,38 +110,4 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
     return false;
 }
 
-// function gerarViewEmoji(indice){
-//     let contador = 0;
-//     let splitAr = null;
-//     let tdTable = document.getElementById('grupo-emoji');
-//     let trTable = '';
-//     let codePoint = '';
-
-//     while(contador < 5){
-//         trTable = '<tr>';
-//         splitAr = arrEmoji[indice+contador].codePoint.split(' ');
-//         splitAr.forEach(code => {
-//             codePoint += `
-//                 &#x${code}
-//             `
-//         });
-        
-//         trTable += gerarTd(codePoint);
-
-//         trTable += '</tr>';
-       
-//         contador++;
-//     }
-    
-//     tdTable.innerHTML =  tdTable.innerHTML+trTable;
-
-//     setTimeout(function(){
-        
-//     },1000);
-
-// }
-
-// function gerarTd(data){
-//     return '<td>'+data+'</td>';
-// }
 
