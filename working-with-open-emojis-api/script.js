@@ -12,14 +12,14 @@ searchId = 0;
 loopTeste();
 
 console.log('foi1');
-pesquisaTodos(searchId, 20);
-searchId += 20;
+pesquisaTodos(searchId, 20, 500);
+searchId += 500;
 async function loopTeste(){
 
     setTimeout(() => {
-        pesquisaTodos(searchId, 20);
+        pesquisaTodos(searchId, 20, 500);
         console.log(searchId);
-        searchId += 20;
+        searchId += 500;
 
         if(searchId < arrEmoji.length){
             loopTeste();
@@ -68,25 +68,27 @@ function removerItems() {
     localStorage.removeItem('arrEmoji');
 }
 
-function pesquisaTodos(startingInd, tamLinha){
+function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
     console.log(startingInd);
-    listArr.innerHTML += `<li class='line' id='${startingInd}'></li><br>`;
-    let line = document.getElementById(startingInd);
-    for (let index = startingInd; index < (startingInd+tamLinha); index++) {
-        if(arrEmoji[index]){
-            let splitAr = arrEmoji[index].codePoint.split(' ');
-            line.innerHTML += `<div class='small-emoji' id='${index}'> `;
-            splitAr.forEach(code =>{
-                line.innerHTML += `
-                    &#x${code};
-                `
-            });
-            line.innerHTML += `</div>`
-        }    
+    qtdLinha = tamPesquisa / 20;
+    for(let i = 0; i < qtdLinha; i++){
+        listArr.innerHTML += `<li class='line' id='${(startingInd)+(i*tamLinha)}'></li><br>`;
+        let line = document.getElementById((startingInd)+(i*tamLinha));
+        for (let index = (startingInd)+(i*tamLinha); index < ((startingInd)+(i*tamLinha)+tamLinha); index++) {
+            if(arrEmoji[index]){
+                let splitAr = arrEmoji[index].codePoint.split(' ');
+                line.innerHTML += `<div class='small-emoji' id='${index}'> `;
+                splitAr.forEach(code =>{
+                    line.innerHTML += `
+                        &#x${code};
+                    `
+                });
+                line.innerHTML += `</div>`
+            }    
+        }
     }
     return false;
 }
-
 
 // function gerarViewEmoji(indice){
 //     let contador = 0;
