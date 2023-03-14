@@ -35,4 +35,16 @@ ul li .small-emoji{
     font-size: 60px;
 }
 
+.buttons-area button{
+    padding: 10px 20px 10px 20px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+}
+
+.buttons-area .clear-btn{
+    background: #eb1d1d;
+    color: #fff;
+}
+
 

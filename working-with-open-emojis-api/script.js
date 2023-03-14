@@ -2,6 +2,8 @@ let body = document.getElementById('body');
 let showArea = document.querySelector('.show-area');
 let listArr = document.querySelector('.list');
 let loadingGif = document.getElementById('loading');
+const deleteButton = document.querySelector('.clear-btn');
+
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
@@ -21,10 +23,12 @@ function carregarDados() {
     let body = document.getElementById('body');
     let barra = window.innerHeight;
     let total = body.offsetHeight;
-    let totalScroll = window.scrollY;
+    let totalScroll = Math.round(window.scrollY);
 
     
-    if((totalScroll+barra) == total){
+    console.log(`barra `+barra+` total: `+total+' totalScroll: '+totalScroll);
+
+    if((totalScroll+barra) >= total-10){
         if(searchId < arrEmoji.length){
             loadingGif.style.display = 'block';
             setTimeout(()=>{
@@ -35,7 +39,7 @@ function carregarDados() {
         }
     }
 }; 
-window.addEventListener("scroll", carregarDados);
+// window.addEventListener("scroll", carregarDados);
 
 // async function loopTeste(){
     
@@ -77,11 +81,9 @@ function verificarDadosExistentes() {
 
     if(localStorage.getItem('arrEmoji')){
         arrEmoji = JSON.parse(localStorage.getItem('arrEmoji'));
-        console.log('nao era pra entra aqui');
     }
     
     if(arrEmoji.length == 0){
-        console.log('funçao verificar dados existentes');
         buscarEmojis();
     }
 }
@@ -111,5 +113,12 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
 
     return false;
 }
+
+function limparTudo(){
+    window.scrollTo(0, 0);
+    listArr.innerHTML = '';
+}
+
+deleteButton.addEventListener('click', limparTudo);
 
 
