@@ -3,7 +3,7 @@ let showArea = document.querySelector('.show-area');
 let listArr = document.querySelector('.list');
 let loadingGif = document.getElementById('loading');
 const deleteButton = document.querySelector('.clear-btn');
-
+const refreshButton = document.querySelector('.refresh-btn');
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
@@ -25,9 +25,6 @@ function carregarDados() {
     let total = body.offsetHeight;
     let totalScroll = Math.round(window.scrollY);
 
-    
-    console.log(`barra `+barra+` total: `+total+' totalScroll: '+totalScroll);
-
     if((totalScroll+barra) >= total-10){
         if(searchId < arrEmoji.length){
             loadingGif.style.display = 'block';
@@ -39,7 +36,7 @@ function carregarDados() {
         }
     }
 }; 
-// window.addEventListener("scroll", carregarDados);
+window.addEventListener("scroll", carregarDados);
 
 // async function loopTeste(){
     
@@ -97,6 +94,7 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
     for(let i = 0; i < qtdLinha; i++){
         listArr.innerHTML += `<li class='line' id='${(startingInd)+(i*tamLinha)}'></li><br>`;
         let line = document.getElementById((startingInd)+(i*tamLinha));
+        // console.log((startingInd)+(i*tamLinha) >= arrEmoji.length)
         for (let index = (startingInd)+(i*tamLinha); index < ((startingInd)+(i*tamLinha)+tamLinha); index++) {
             if(arrEmoji[index]){
                 let splitAr = arrEmoji[index].codePoint.split(' ');
@@ -117,8 +115,18 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
 function limparTudo(){
     window.scrollTo(0, 0);
     listArr.innerHTML = '';
+    refreshButton.style.display = 'block';
+    deleteButton.style.display = 'none';
+    searchId = 0;
 }
-
 deleteButton.addEventListener('click', limparTudo);
 
+function refreshData(){
+    pesquisaTodos(searchId, 20, 500);
+    searchId += 500;
+    deleteButton.style.display = 'block';   
+    refreshButton.style.display = 'none';
+    carregarDados();
+}
 
+refreshButton.addEventListener('click', refreshData);

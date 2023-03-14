@@ -40,11 +40,16 @@ ul li .small-emoji{
     outline: none;
     border: none;
     border-radius: 5px;
+    color: #fff;
 }
 
 .buttons-area .clear-btn{
     background: #eb1d1d;
-    color: #fff;
+}
+
+.buttons-area .refresh-btn{
+    background: #2db2e6;
+    display: none;
 }
 
 
