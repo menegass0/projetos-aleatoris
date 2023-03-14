@@ -111,11 +111,37 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
     return false;
 }
 
+function pesquisaPorGrupo(grupoSearch){
+    grupo = arrEmoji
+    qtdLinha = Math.floor(/ 20);
+    for(let i = 0; i < qtdLinha; i++){
+        let linha = (startingInd)+(i*tamLinha);
+        if(linha < arrEmoji.length){
+            listArr.innerHTML += `<li class='line' id='${linha}'></li><br>`;
+            let line = document.getElementById(linha);
+            for (let index = linha; index < (linha+tamLinha); index++) {
+                if(arrEmoji[index]){
+                    let codePoints = '';
+                    let splitAr = arrEmoji[index].codePoint.split(' ');
+                    line.innerHTML += `<div class='small-emoji' id='${index}'> `;
+                    splitAr.forEach(code =>{
+                        codePoints += '&#x'+code;  
+                    });
+                    line.innerHTML += codePoints;
+                    line.innerHTML += `</div>`
+                }    
+            }
+        }
+    }
+    return false;
+}
+
 function limparTudo(){
     window.scrollTo(0, 0);
     listArr.innerHTML = '';
     refreshButton.style.display = 'block';
     deleteButton.style.display = 'none';
+    divGrupo.style.display = 'block';
     searchId = 0;
     wrapper.style.paddingBottom = '20px';
 }
@@ -134,7 +160,7 @@ function createGrupos(grupo){
     let html = null;
 
     if(!document.getElementById(grupo)){
-        html = '<div onclick="descobrirGrupo(this)" style="height: 50px; width: 75px; float: left; text-align: center; background: blue; margin: 5px; padding: 20px; color: white; border-radius: 10px; cursor: pointer" id="'+grupo+'">'+grupo+'</div>';
+        html = '<div onclick="showByGroup(this)" class="grupos" id="'+grupo+'">'+grupo+'</div>';
         divGrupo.innerHTML += html;
     }
 
@@ -147,16 +173,4 @@ function loopGrupo(){
     });
 }
 
-function descobrirGrupo(componente){
-    alert(componente.innerHTML);
-}
-
 refreshButton.addEventListener('click', refreshData);
-
-
-console.log(arrEmoji);
-
-const allGroups = [...new Set(arrEmoji.map((item) => item.group))];
-const allSubGroups = [...new Set(arrEmoji.map((item) => item.subGroup))]
-
-console.log(allSubGroups);

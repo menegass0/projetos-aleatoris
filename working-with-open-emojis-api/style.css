@@ -11,6 +11,7 @@ body{
     padding: 100px 0 100px 0;
 }
 .wrapper {
+    max-width: 750px;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -65,6 +66,18 @@ ul li .small-emoji{
 
 #grupo{
     margin-bottom: 50px;
+    display: none;
 }
 
-
+.grupos{
+    height: 50px;
+    width: 75px;
+    float: left;
+    text-align: center;
+    background: #2db2e6;
+    margin: 5px;
+    padding: 20px;
+    color: #fff;
+    border-radius: 10px;
+    cursor: pointer;
+}
