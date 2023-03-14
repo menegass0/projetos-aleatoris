@@ -87,7 +87,7 @@ function removerItems() {
 }
 
 function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
-    qtdLinha = tamPesquisa / 20;
+    qtdLinha = Math.ceil(tamPesquisa / 20);
     for(let i = 0; i < qtdLinha; i++){
         let linha = (startingInd)+(i*tamLinha);
         if(linha < arrEmoji.length){
@@ -111,18 +111,26 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
     return false;
 }
 
-function pesquisaPorGrupo(grupoSearch){
-    grupo = arrEmoji
-    qtdLinha = Math.floor(/ 20);
+function pesquisaPorGrupo(grupoSearch){ 
+    window.removeEventListener("scroll", carregarDados);
+    refreshButton.style.display = 'block';
+    deleteButton.style.display = 'block';
+
+    let grupo = grupoSearch.innerHTML;
+    let elementos = arrEmoji.filter((elem) => elem.group === grupo);
+    let tamLinha = 20;
+    let qtdLinha = Math.ceil(elementos.length / tamLinha);
+
+    listArr.innerHTML = '';
     for(let i = 0; i < qtdLinha; i++){
-        let linha = (startingInd)+(i*tamLinha);
-        if(linha < arrEmoji.length){
+        let linha = i*tamLinha;
+        if((linha) < elementos.length){
             listArr.innerHTML += `<li class='line' id='${linha}'></li><br>`;
             let line = document.getElementById(linha);
             for (let index = linha; index < (linha+tamLinha); index++) {
-                if(arrEmoji[index]){
+                if(elementos[index]){
                     let codePoints = '';
-                    let splitAr = arrEmoji[index].codePoint.split(' ');
+                    let splitAr = elementos[index].codePoint.split(' ');
                     line.innerHTML += `<div class='small-emoji' id='${index}'> `;
                     splitAr.forEach(code =>{
                         codePoints += '&#x'+code;  
@@ -133,7 +141,6 @@ function pesquisaPorGrupo(grupoSearch){
             }
         }
     }
-    return false;
 }
 
 function limparTudo(){
@@ -141,26 +148,28 @@ function limparTudo(){
     listArr.innerHTML = '';
     refreshButton.style.display = 'block';
     deleteButton.style.display = 'none';
-    divGrupo.style.display = 'block';
     searchId = 0;
     wrapper.style.paddingBottom = '20px';
+    window.removeEventListener("scroll", carregarDados);
 }
 deleteButton.addEventListener('click', limparTudo);
 
 function refreshData(){
     pesquisaTodos(searchId, 20, 500);
     searchId += 500;
+    listArr.innerHTML  = '';
     deleteButton.style.display = 'block';   
     refreshButton.style.display = 'none';
     carregarDados();
     wrapper.style.paddingBottom = '300px';
+    window.addEventListener("scroll", carregarDados);
 }
 
 function createGrupos(grupo){
     let html = null;
 
     if(!document.getElementById(grupo)){
-        html = '<div onclick="showByGroup(this)" class="grupos" id="'+grupo+'">'+grupo+'</div>';
+        html = '<div onclick="pesquisaPorGrupo(this)" class="grupos" id="'+grupo+'">'+grupo+'</div>';
         divGrupo.innerHTML += html;
     }
 
@@ -172,5 +181,4 @@ function loopGrupo(){
         createGrupos(Element.group);
     });
 }
-
 refreshButton.addEventListener('click', refreshData);
