@@ -26,6 +26,7 @@ function carregarDados() {
     let totalScroll = Math.round(window.scrollY);
 
     if((totalScroll+barra) >= total-10){
+        console.log(`searchId `+searchId+` arrEmoji.length `+arrEmoji.length)
         if(searchId < arrEmoji.length){
             loadingGif.style.display = 'block';
             setTimeout(()=>{
@@ -92,20 +93,23 @@ function removerItems() {
 function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
     qtdLinha = tamPesquisa / 20;
     for(let i = 0; i < qtdLinha; i++){
-        listArr.innerHTML += `<li class='line' id='${(startingInd)+(i*tamLinha)}'></li><br>`;
-        let line = document.getElementById((startingInd)+(i*tamLinha));
-        // console.log((startingInd)+(i*tamLinha) >= arrEmoji.length)
-        for (let index = (startingInd)+(i*tamLinha); index < ((startingInd)+(i*tamLinha)+tamLinha); index++) {
-            if(arrEmoji[index]){
-                let splitAr = arrEmoji[index].codePoint.split(' ');
-                line.innerHTML += `<div class='small-emoji' id='${index}'> `;
-                splitAr.forEach(code =>{
-                    line.innerHTML += `
-                        &#x${code};
-                    `
-                });
-                line.innerHTML += `</div>`
-            }    
+        let linha = (startingInd)+(i*tamLinha);
+        if(linha < arrEmoji.length){
+            listArr.innerHTML += `<li class='line' id='${linha}'></li><br>`;
+            let line = document.getElementById(linha);
+            console.log(linha)
+            for (let index = linha; index < (linha+tamLinha); index++) {
+                if(arrEmoji[index]){
+                    let splitAr = arrEmoji[index].codePoint.split(' ');
+                    line.innerHTML += `<div class='small-emoji' id='${index}'> `;
+                    splitAr.forEach(code =>{
+                        line.innerHTML += `
+                            &#x${code};
+                        `
+                    });
+                    line.innerHTML += `</div>`
+                }    
+            }
         }
     }
 
