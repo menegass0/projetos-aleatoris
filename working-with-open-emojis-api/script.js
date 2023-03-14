@@ -4,6 +4,7 @@ let listArr = document.querySelector('.list');
 let loadingGif = document.getElementById('loading');
 const deleteButton = document.querySelector('.clear-btn');
 const refreshButton = document.querySelector('.refresh-btn');
+const wrapper = document.querySelector('.wrapper');
 
 let arrEmoji = [];
 let arrEmojiTemp = [];
@@ -25,14 +26,16 @@ function carregarDados() {
     let total = body.offsetHeight;
     let totalScroll = Math.round(window.scrollY);
 
-    if((totalScroll+barra) >= total-10){
-        console.log(`searchId `+searchId+` arrEmoji.length `+arrEmoji.length)
+    if((totalScroll+barra) >= total-5){
+        // console.log(`searchId `+searchId+` arrEmoji.length `+arrEmoji.length)
         if(searchId < arrEmoji.length){
             loadingGif.style.display = 'block';
+            deleteButton.style.display = 'none';
             setTimeout(()=>{
                 pesquisaTodos(searchId, 20, 500);
                 searchId += 500;
                 loadingGif.style.display = 'none';
+                deleteButton.style.display = 'block';
             }, 1000)
         }
     }
@@ -100,13 +103,13 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
             console.log(linha)
             for (let index = linha; index < (linha+tamLinha); index++) {
                 if(arrEmoji[index]){
+                    let codePoints = '';
                     let splitAr = arrEmoji[index].codePoint.split(' ');
                     line.innerHTML += `<div class='small-emoji' id='${index}'> `;
                     splitAr.forEach(code =>{
-                        line.innerHTML += `
-                            &#x${code};
-                        `
+                        codePoints += '&#x'+code;  
                     });
+                    line.innerHTML += codePoints;
                     line.innerHTML += `</div>`
                 }    
             }
@@ -122,6 +125,7 @@ function limparTudo(){
     refreshButton.style.display = 'block';
     deleteButton.style.display = 'none';
     searchId = 0;
+    wrapper.style.paddingBottom = '20px';
 }
 deleteButton.addEventListener('click', limparTudo);
 
@@ -131,6 +135,11 @@ function refreshData(){
     deleteButton.style.display = 'block';   
     refreshButton.style.display = 'none';
     carregarDados();
+    wrapper.style.paddingBottom = '300px';
 }
 
 refreshButton.addEventListener('click', refreshData);
+
+
+console.log(arrEmoji);
+// const unique = [...new Set(arrEmoji.map((item) => item.))]
