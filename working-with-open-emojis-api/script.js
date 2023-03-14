@@ -2,6 +2,7 @@ let body = document.getElementById('body');
 let showArea = document.querySelector('.show-area');
 let listArr = document.querySelector('.list');
 let loadingGif = document.getElementById('loading');
+let divGrupo = document.getElementById('grupo');
 const deleteButton = document.querySelector('.clear-btn');
 const refreshButton = document.querySelector('.refresh-btn');
 const wrapper = document.querySelector('.wrapper');
@@ -13,6 +14,8 @@ let searchId = null;
 // removerItems();
 verificarDadosExistentes();
 // loopTeste();
+
+loopGrupo();
 
 searchId = 0;
 console.log('foi1');
@@ -44,6 +47,7 @@ window.addEventListener("scroll", carregarDados);
 
 function montarArray(item, indice) {
     arrEmojiTemp[indice] = item;
+
     if(arrEmojiTemp[indice].codePoint.includes('; fully-qualified')){
         let whereSlice = arrEmojiTemp[indice].codePoint.indexOf(';');
         arrEmojiTemp[indice].codePoint = arrEmojiTemp[indice].codePoint.slice(0, whereSlice-1);
@@ -56,7 +60,7 @@ function armazenarDados(data) {
 }
 
 function buscarEmojis() {
-    fetch('https://emoji-api.com/emojis?access_key=86c4d9029d3a3d371e868b7f28bbe0bac0335f6c')
+    fetch('https://emoji-api.com/emojis?access_key=c085d8ffdc1e2e789331e8cc72649804d7b57694')
     .then(res => res.json())
     .then(data => {
         data.forEach(
@@ -89,7 +93,6 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
         if(linha < arrEmoji.length){
             listArr.innerHTML += `<li class='line' id='${linha}'></li><br>`;
             let line = document.getElementById(linha);
-            console.log(linha)
             for (let index = linha; index < (linha+tamLinha); index++) {
                 if(arrEmoji[index]){
                     let codePoints = '';
@@ -127,8 +130,33 @@ function refreshData(){
     wrapper.style.paddingBottom = '300px';
 }
 
+function createGrupos(grupo){
+    let html = null;
+
+    if(!document.getElementById(grupo)){
+        html = '<div onclick="descobrirGrupo(this)" style="height: 50px; width: 75px; float: left; text-align: center; background: blue; margin: 5px; padding: 20px; color: white; border-radius: 10px; cursor: pointer" id="'+grupo+'">'+grupo+'</div>';
+        divGrupo.innerHTML += html;
+    }
+
+}
+
+function loopGrupo(){
+    let grupos = JSON.parse(localStorage.getItem('arrEmoji'));
+    grupos.forEach(Element => {
+        createGrupos(Element.group);
+    });
+}
+
+function descobrirGrupo(componente){
+    alert(componente.innerHTML);
+}
+
 refreshButton.addEventListener('click', refreshData);
 
 
 console.log(arrEmoji);
-// const unique = [...new Set(arrEmoji.map((item) => item.))]
+
+const allGroups = [...new Set(arrEmoji.map((item) => item.group))];
+const allSubGroups = [...new Set(arrEmoji.map((item) => item.subGroup))]
+
+console.log(allSubGroups);
