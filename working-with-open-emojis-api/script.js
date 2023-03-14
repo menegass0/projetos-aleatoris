@@ -106,6 +106,12 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
                     let codePoints = '';
                     let splitAr = arrEmoji[index].codePoint.split(' ');
                     line.innerHTML += `<div class='small-emoji' id='${index}'> `;
+                    if(splitAr.indexOf(';') > 0){
+                        let ponto = splitAr.indexOf(';');
+                        splitAr.splice(ponto, 1);
+                        let fullyQl = splitAr.indexOf('fully-qualified');
+                        splitAr.splice(fullyQl, 1); 
+                    }
                     splitAr.forEach(code =>{
                         codePoints += '&#x'+code;  
                     });
