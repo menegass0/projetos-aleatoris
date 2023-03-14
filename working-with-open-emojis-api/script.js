@@ -42,22 +42,13 @@ function carregarDados() {
 }; 
 window.addEventListener("scroll", carregarDados);
 
-// async function loopTeste(){
-    
-//     setTimeout(() => {
-//         pesquisaTodos(searchId, 20, 500);
-//         searchId += 500;
-        
-//         if(searchId < arrEmoji.length){
-//             loopTeste();
-//         }
-        
-//     }, 1000);
-// }
-
-
 function montarArray(item, indice) {
     arrEmojiTemp[indice] = item;
+    if(arrEmojiTemp[indice].codePoint.includes('; fully-qualified')){
+        let whereSlice = arrEmojiTemp[indice].codePoint.indexOf(';');
+        arrEmojiTemp[indice].codePoint = arrEmojiTemp[indice].codePoint.slice(0, whereSlice-1);
+        console.log(arrEmojiTemp[indice])
+    }
 }
 
 function armazenarDados(data) {
@@ -77,9 +68,7 @@ function buscarEmojis() {
 }
 
 function verificarDadosExistentes() {
-    console.log(localStorage.getItem('arrEmoji') ? true : false);
     
-
     if(localStorage.getItem('arrEmoji')){
         arrEmoji = JSON.parse(localStorage.getItem('arrEmoji'));
     }
@@ -106,12 +95,6 @@ function pesquisaTodos(startingInd, tamLinha, tamPesquisa){
                     let codePoints = '';
                     let splitAr = arrEmoji[index].codePoint.split(' ');
                     line.innerHTML += `<div class='small-emoji' id='${index}'> `;
-                    if(splitAr.indexOf(';') > 0){
-                        let ponto = splitAr.indexOf(';');
-                        splitAr.splice(ponto, 1);
-                        let fullyQl = splitAr.indexOf('fully-qualified');
-                        splitAr.splice(fullyQl, 1); 
-                    }
                     splitAr.forEach(code =>{
                         codePoints += '&#x'+code;  
                     });
