@@ -3,6 +3,8 @@ let showArea = document.querySelector('.show-area');
 let listArr = document.querySelector('.list');
 let loadingGif = document.getElementById('loading');
 let divGrupo = document.getElementById('grupo');
+let randomEmo = document.querySelector('.random-emoji');
+const randomButton = document.querySelector('.random-btn');
 const deleteButton = document.querySelector('.clear-btn');
 const refreshButton = document.querySelector('.refresh-btn');
 const wrapper = document.querySelector('.wrapper');
@@ -34,11 +36,15 @@ function carregarDados() {
         if(searchId < arrEmoji.length){
             loadingGif.style.display = 'block';
             deleteButton.style.display = 'none';
+            randomButton.style.display = 'none';
+            window.removeEventListener("scroll", carregarDados);
             setTimeout(()=>{
                 pesquisaTodos(searchId, 20, 500);
                 searchId += 500;
                 loadingGif.style.display = 'none';
                 deleteButton.style.display = 'block';
+                randomButton.style.display = 'block';
+                window.addEventListener("scroll", carregarDados);
             }, 1000)
         }
     }
@@ -121,6 +127,7 @@ function pesquisaPorGrupo(grupoSearch){
     let tamLinha = 20;
     let qtdLinha = Math.ceil(elementos.length / tamLinha);
 
+    randomEmo.innerHTML = '';
     listArr.innerHTML = '';
     for(let i = 0; i < qtdLinha; i++){
         let linha = i*tamLinha;
@@ -146,6 +153,7 @@ function pesquisaPorGrupo(grupoSearch){
 function limparTudo(){
     window.scrollTo(0, 0);
     listArr.innerHTML = '';
+    randomEmo.innerHTML = '';
     refreshButton.style.display = 'block';
     deleteButton.style.display = 'none';
     searchId = 0;
@@ -155,13 +163,14 @@ function limparTudo(){
 deleteButton.addEventListener('click', limparTudo);
 
 function refreshData(){
+    listArr.innerHTML  = '';
+    randomEmo.innerHTML = '';
+    searchId = 9;
     pesquisaTodos(searchId, 20, 500);
     searchId += 500;
-    listArr.innerHTML  = '';
     deleteButton.style.display = 'block';   
     refreshButton.style.display = 'none';
     carregarDados();
-    wrapper.style.paddingBottom = '300px';
     window.addEventListener("scroll", carregarDados);
 }
 
@@ -181,4 +190,21 @@ function loopGrupo(){
         createGrupos(Element.group);
     });
 }
+
+console.log(arrEmoji);
 refreshButton.addEventListener('click', refreshData);
+
+function createRandomEmoji(){
+    deleteButton.style.display = 'block';
+
+    window.removeEventListener("scroll", carregarDados);
+    listArr.innerHTML  = '';
+
+    let codePoint = '';
+    let codes = arrEmoji[Math.floor(Math.random() * arrEmoji.length)].codePoint.split(' ');
+    codes.forEach(elem => {
+        codePoint += '&#x'+elem;
+    })
+
+    randomEmo.innerHTML = codePoint;
+}
